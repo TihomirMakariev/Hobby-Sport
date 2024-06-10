@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- ======= Head ======= -->
+<head th:replace="~{fragments/head::head}"></head>
+
+<body class="blog-page" data-bs-spy="scroll" data-bs-target="#navmenu">
+
+<!-- ======= Header ======= -->
+<header id="header" class="header sticky-top d-flex align-items-center"
+        style="padding: 0">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1>Be Active</h1>
+            <span>!</span>
+        </a>
+        <!-- Nav Menu -->
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+        <!-- End Nav Menu -->
+        <a></a>
+    </div>
+</header><!-- End Header -->
+
+<main id="main">
+
+    <!-- Search bar -->
+    <form th:method="GET" th:action="@{/hobbies/all}" th:object="${searchHobbies}">
+        <section class="search-banner bg-light text-white py-1 my-0" id="search-banner">
+            <div class="container py-0 my-0">
+                <div class="row text-center pb-1"></div>
+                <div class="row justify-content-center"> <!-- Center align the row -->
+                    <!-- Search fields -->
+                    <div class="col-md-4 col-8"> <!-- Adjust the width for different screen sizes -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <select id="category"
+                                            name="category"
+                                            class="form-select form-select-sm">
+                                        <option value="">- Select category -</option>
+                                        <option th:each="category : ${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).values()}"
+                                                th:text="${category}"
+                                                th:value="${category}"
+                                                th:selected="${category} == *{category}">
+                                            Category
+                                        </option>
+                                    </select>
+                                    <!--<select id="location"
+                                            name="location"
+                                            class="form-select form-select-sm">
+                                        <option value="">- Select location -</option>
+                                        <option th:each="location : ${T(bg.tihomir.hobby.model.enums.LocationEnum).values()}"
+                                                th:text="${location}"
+                                                th:value="${location}"
+                                                th:selected="${location} == *{location}">
+                                            Category
+                                        </option>
+                                    </select>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Search button -->
+                    <div class="col-md-2 col-4 d-flex justify-content-end align-items-center"> <!-- Adjust the width for different screen sizes -->
+                        <button class="btn btn-sm btn-outline-danger w-100" type="submit">Search</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+    <!-- Search bar End-->
+
+    <!-- Blog Page Title & Breadcrumbs -->
+    <div data-aos="fade" class="page-title">
+        <div class="heading p-4">
+            <div class="container ">
+                <div class="row d-flex justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1>Hobbies & Sports</h1>
+                        <p class="mb-0">Find out your best hobbies or sports for you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- End Page Title -->
+
+    <!-- Blog Section - Blog Page -->
+    <section id="blog" class="blog p-3 mb-5">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="row gy-4 posts-list">
+                <div class="col-xl-4 col-lg-6 mt-5" th:each="hobby: ${hobbies}">
+                    <article>
+                        <div class="post-img">
+                            <img th:src="${hobby.imgUrlMain}" alt="Hobby image" class="img-fluid">
+                        </div>
+                        <p class="post-category mb-1"><strong>Category:</strong> <span th:text="${hobby.category}"></span></p>
+                        <p class="post-category mb-4"><strong>Location:</strong> <span th:text="${hobby.location}"></span></p>
+                        <h2 class="title">
+                            <a th:href="@{/hobbies/details/{id}(id=${hobby.id})}"><span th:text="${hobby.name}"></span></a>
+                        </h2>
+                    </article>
+                </div><!-- End post list item -->
+            </div><!-- End blog posts list -->
+        </div>
+    </section><!-- End Blog Section -->
+</main>
+
+<!-- Pagination -->
+<th:block th:if="${not #lists.isEmpty(hobbies.content)}">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <!-- First page button -->
+            <li class="page-item-custom" th:classappend="${hobbies.isFirst() ? 'disabled' : ''}">
+                <a th:unless="${hobbies.isFirst()}"
+                   th:href="@{/hobbies/all(size=${hobbies.getSize()},page=0,category=${searchHobbies.category})}"
+                   class="page-link">First</a>
+                <a th:if="${hobbies.isFirst()}"
+                   class="page-link" href="#">First</a>
+            </li>
+            <!-- Previous page button -->
+            <li class="page-item-custom" th:classappend="${hobbies.hasPrevious() ? '' : 'disabled'}">
+                <a th:if="${hobbies.hasPrevious()}"
+                   th:href="@{/hobbies/all(size=${hobbies.getSize()},page=${hobbies.getNumber() - 1},category=${searchHobbies.category})}"
+                   class="page-link">Previous</a>
+                <a th:unless="${hobbies.hasPrevious()}"
+                   class="page-link" href="#">Previous</a>
+            </li>
+
+            <!-- Dynamic page numbers -->
+            <th:block th:each="pageNumber : ${#numbers.sequence(1, hobbies.totalPages)}">
+                <li class="page-item-custom" th:classappend="${pageNumber - 1 == hobbies.number ? 'active' : ''}">
+                    <a th:href="@{/hobbies/all(size=${hobbies.getSize()},page=${pageNumber - 1},category=${searchHobbies.category})}"
+                       class="page-link" th:text="${pageNumber}"></a>
+                </li>
+            </th:block>
+
+            <!-- Next page button -->
+            <li class="page-item-custom" th:classappend="${hobbies.hasNext() ? '' : 'disabled'}">
+                <a th:if="${hobbies.hasNext()}"
+                   th:href="@{/hobbies/all(size=${hobbies.getSize()},page=${hobbies.getNumber() + 1},category=${searchHobbies.category})}"
+                   class="page-link">Next</a>
+                <a th:unless="${hobbies.hasNext()}"
+                   class="page-link" href="#">Next</a>
+            </li>
+            <!-- Last page button -->
+            <li class="page-item-custom" th:classappend="${hobbies.isLast() ? 'disabled' : ''}">
+                <a th:unless="${hobbies.isLast()}"
+                   th:href="@{/hobbies/all(size=${hobbies.getSize()},page=${hobbies.getTotalPages() - 1},category=${searchHobbies.category})}"
+                   class="page-link">Last</a>
+                <a th:if="${hobbies.isLast()}"
+                   class="page-link" href="#">Last</a>
+            </li>
+        </ul>
+    </nav>
+</th:block>
+
+<!-- Pagination End-->
+
+<!-- ======= Footer ======= -->
+<footer th:replace="~{fragments/footer :: footer}"></footer><!-- End Footer -->
+
+<!-- ======= JS ======= -->
+<div th:replace="~{fragments/js :: js}"></div><!-- End JS -->
+
+</body>
+
+</html>

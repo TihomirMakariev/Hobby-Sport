@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- Nav Menu -->
+<nav th:fragment="navbar" id="navmenu" class="navmenu">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li sec:authorize="hasRole('BUSINESS_USER')"><a th:href="@{/business/my-clients}">My clients</a></li>
+        <li sec:authorize="hasRole('BUSINESS_USER')" class="dropdown has-dropdown"><a href="#"><span>Offers</span> <i class="bi bi-chevron-down"></i></a>
+            <ul class="dd-box-shadow">
+                <li><a th:href="@{/business/my-offers}">My offers</a></li>
+                <li><a th:href="@{/hobbies/create-offer}">Create Offer Hobby</a></li>
+            </ul>
+        </li>
+        <li><a th:href="@{/hobbies/all}">Hobbies & Sports</a></li>
+        <li sec:authorize="isAuthenticated() and !hasRole('BUSINESS_USER')"><a th:href="@{/hobbies/my-hobbies}">My hobbies</a></li>
+        <li><a th:href="@{/about}">About</a></li>
+
+        <li sec:authorize="isAuthenticated() and !hasRole('BUSINESS_USER')"><a th:href="@{/users/account/{id}(id=${#authentication.principal.id})}">Account</a></li>
+        <li sec:authorize="isAuthenticated() and hasRole('BUSINESS_USER')"><a th:href="@{/users/business-account/{id}(id=${#authentication.principal.id})}">Account</a></li>
+
+        <li sec:authorize="!isAuthenticated()"><a th:href="@{/users/login}">Login</a></li>
+        <li sec:authorize="!isAuthenticated()"><a th:href="@{/users/register}">Sing Up</a></li>
+        <li sec:authorize="!isAuthenticated()" class="dropdown has-dropdown"><a href="#"><span>Business customers</span> <i class="bi bi-chevron-down"></i></a>
+            <ul class="dd-box-shadow">
+                <li><a th:href="@{/users/register-business}">Create Business Account</a></li>
+            </ul>
+        </li>
+
+        <li sec:authorize="isAuthenticated()">
+            <a class="btn-success"><strong>Welcome,
+                <th:block th:text="${#authentication.principal.fullName}"></th:block>
+                !</strong>
+            </a>
+        </li>
+
+        <li><a href="">
+            <form th:action="@{/users/logout}" sec:authorize="isAuthenticated()"
+                  th:method="post">
+                <button class="btn btn-outline-success" type="submit">Logout</button>
+            </form>
+        </a>
+        </li>
+
+        <li class="nav-item" sec:authorize="isAuthenticated() and !hasRole('BUSINESS_USER')">
+            <a class="nav-link" th:href="@{/shoppingCart}">
+                <i class="bi bi-cart3" style="font-size: 1.5rem;"></i>
+                <span class="badge badge-pill badge-danger"></span>
+            </a>
+        </li>
+    </ul>
+    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+</nav><!-- End Nav Menu -->
+
+</body>
+</html>

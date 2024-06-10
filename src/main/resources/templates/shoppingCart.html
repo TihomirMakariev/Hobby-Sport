@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- ======= Head ======= -->
+<head th:replace="~{fragments/head::head}"></head>
+
+<body class="blog-page" data-bs-spy="scroll" data-bs-target="#navmenu">
+
+<!-- ======= Header ======= -->
+<header id="header" class="header sticky-top d-flex align-items-center"
+        style="padding: 0">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1>Be Active</h1>
+            <span>!</span>
+        </a>
+
+        <!-- Nav Menu -->
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+        <!-- End Nav Menu -->
+
+        <a></a>
+
+    </div>
+</header><!-- End Header -->
+
+<main>
+    <!-- Blog Page Shopping cart -->
+    <div data-aos="fade" class="page-title">
+        <div class="heading p-4">
+            <div class="container ">
+                <div class="row d-flex justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1>Shopping cart</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- End Page Shopping cart -->
+
+    <!-- Blog Section - Blog Page -->
+    <section id="blog" class="blog p-3">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="abo : ${abos}">
+                        <td class="col-md-2" th:text="|${abo.name}|"></td>
+                        <td class="col-md-1" th:text="|${abo.aboPrice} 'EUR'|"></td>
+                        <td th:class="col-2">
+                            <img th:src="${abo.imgUrl}" alt="Hobby Image" class="img-fluid img-thumbnail fixed-size">
+                        </td>
+                        <td class="col-md-1"><a class="edit-offer" th:href="@{'/shoppingCart/removeProduct/{id}'(id=${abo.hobbyId})}">
+                            <i class="bi bi-trash"></i></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="classes" style="height: auto; overflow: hidden">
+                    <h3 class="mySticky bg-gray text-dark rounded">Total</h3>
+                    <span th:text="| *{total} EUR|" class="mr-3"></span>
+
+                    <a class="edit-offer  ml-3" th:href="@{/shoppingCart/checkout}" style="padding-left: 10px;"><i class="bi bi-cart-check-fill">Checkout</i></a>
+
+                </div>
+            </div>
+        </div>
+    </section><!-- End Blog Section -->
+
+
+</main>
+
+<!-- ======= Footer ======= -->
+<footer th:replace="~{fragments/footer :: footer}"></footer><!-- End Footer -->
+
+<!-- ======= JS ======= -->
+<div th:replace="~{fragments/js :: js}"></div><!-- End JS -->
+
+</body>
+
+</html>

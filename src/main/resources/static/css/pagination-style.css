@@ -1,0 +1,48 @@
+
+/*--------------------------------------------------------------
+# Pagination Page
+--------------------------------------------------------------*/
+
+/*.pagination .page-link.active {
+  background-color: #f60202;
+  color: #ffffff;
+  border-color: #f60202;
+}*/
+
+
+/*!* Активна страница *!
+.custom-pagination .page-item-custom.active a {
+    background-color: #f60202; !* Цвят на фона за активна страница *!
+    color: #fff; !* Цвят на текста за активна страница *!
+    border-color: #f60202; !* Цвят на рамката за активна страница *!
+}
+
+!* Неактивна страница *!
+.custom-pagination .page-item-custom.disabled a {
+    background-color: #fff; !* Цвят на фона за неактивна страница *!
+    color: #000; !* Цвят на текста за неактивна страница *!
+    border-color: #dee2e6; !* Цвят на рамката за неактивна страница *!
+}
+
+.custom-pagination .page-item-custom.active {
+    background-color: #f60202; !* Change this color to your desired active page color *!
+}*/
+
+/* Custom Pagination Styles */
+.page-item-custom.disabled .page-link {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Активна страница */
+.page-item-custom.active a {
+    background-color: #f60202; /* Цвят на фона за активна страница */
+    color: #fff; /* Цвят на текста за активна страница */
+    border-color: #f60202; /* Цвят на рамката за активна страница */
+}
+
+.page-item-custom.disabled .page-link:hover {
+    background-color: #fff;
+    color: #000;
+    border-color: #dee2e6;
+}

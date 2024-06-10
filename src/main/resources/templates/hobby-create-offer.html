@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<!-- ======= Head ======= -->
+<head th:replace="~{fragments/head::head}"></head>
+
+<body class="index-page" data-bs-spy="scroll" data-bs-target="#navmenu">
+
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center" style="padding: 0">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+
+        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1>Be Active</h1>
+            <span>!</span>
+        </a>
+
+        <!-- Nav Menu -->
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+        <!-- End Nav Menu -->
+
+        <a></a>
+
+    </div>
+</header><!-- End Header -->
+
+<main id="main">
+
+    <!-- Hero Section - Home Page -->
+    <section id="hero" class="hero">
+        <img class="background-img" src="/images/hero-bg.jpg" alt="" data-aos="fade-in">
+
+        <!-- Registration 2 - Bootstrap Brain Component -->
+        <div class="bg-light py-2 py-md-3" id="auth-register">
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <div class="bg-white p-4 p-md-5 rounded shadow-sm">
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-center">
+                                    <div class="mb-5 text-center">
+                                        <h2 class="h3" style="color: coral">Create Offer Hobby</h2>
+                                        <h3 class="fs-6 fw-normal text-secondary m-0">Enter your details to
+                                            create it</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <form enctype="multipart/form-data"
+                                  th:method="post"
+                                  th:action="@{/hobbies/create-offer}"
+                                  th:object="${hobbyOfferDTO}">
+                                <div class="row gy-3 gy-md-4 overflow-hidden">
+                                    <div class="col-12">
+                                        <input th:field="*{name}"
+                                               th:errorclass="is-invalid"
+                                               type="text"
+                                               class="form-control form-control-sm"
+                                               name="name"
+                                               id="name"
+                                               placeholder="Name"
+                                               required/>
+                                        <p class="invalid-feedback errors alert alert-danger text-black-50"
+                                           style="font-size: unset">
+                                            Name is required and should be between 2 and 20 symbol.
+                                        </p>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <input th:field="*{price}"
+                                               th:errorclass="is-invalid"
+                                               type="number"
+                                               class="form-control form-control-sm"
+                                               name="lastName"
+                                               id="lastName"
+                                               placeholder="Price per entry"
+                                               required/>
+                                        <p class="invalid-feedback errors alert alert-danger text-black-50"
+                                           style="font-size: unset">
+                                            Price is required!
+                                        </p>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <select id="category"
+                                                name="category"
+                                                class="form-select form-select-sm"
+                                                required
+                                                th:errorclass="is-invalid">
+                                            <option value="">- Select category -</option>
+                                            <option th:each="category : ${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).values()}"
+                                                    th:text="${category}"
+                                                    th:value="${category}"
+                                                    th:selected="${category} == *{category}">
+                                                Category
+                                            </option>
+                                        </select>
+                                        <p class="invalid-feedback errors alert alert-danger">
+                                            The category is required!
+                                        </p>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <textarea th:field="*{description}"
+                                                  th:errorclass="is-invalid"
+                                                  type="description"
+                                                  class="form-control form-control-sm"
+                                                  name="description"
+                                                  id="description"
+                                                  placeholder="Description"
+                                                  required>
+                                        </textarea>
+                                        <p class="invalid-feedback errors alert alert-danger text-black-50"
+                                           style="font-size: unset">
+                                            Description is required!
+                                        </p>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <select id="location"
+                                                name="location"
+                                                class="form-select form-control-sm"
+                                                required
+                                                th:errorclass="is-invalid">
+                                            <option value="">- Select location -</option>
+                                            <option th:each="location : ${T(bg.tihomir.hobby.model.enums.LocationEnum).values()}"
+                                                    th:text="${location}"
+                                                    th:value="${location}"
+                                                    th:selected="${location} == *{location}">
+                                                Location
+                                            </option>
+                                        </select>
+                                        <p class="invalid-feedback errors alert alert-danger">
+                                            The location is required!
+                                        </p>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <input class="form-control form-control-sm"
+                                               type="file" name="imgMain" id="imgMain" th:errorclass="is-invalid" multiple>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <input class="form-control form-control-sm"
+                                               type="file" name="imgOne" id="imgOne" th:errorclass="is-invalid" multiple>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <input class="form-control form-control-sm"
+                                               type="file" name="imgTwo" id="imgTwo" th:errorclass="is-invalid" multiple>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <input class="form-control form-control-sm"
+                                               type="file" name="imgThree" id="imgThree" th:errorclass="is-invalid" multiple>
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <div class="d-grid">
+                                            <button class="btn btn-sm btn-danger" type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Hero Section -->
+</main>
+
+<!-- ======= Footer ======= -->
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<!-- End Footer -->
+
+
+<div th:replace="~{fragments/js :: js}"></div>
+</body>
+</html>

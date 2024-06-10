@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- ======= Head ======= -->
+<head th:replace="~{fragments/head::head}"></head>
+
+<body class="blog-page" data-bs-spy="scroll" data-bs-target="#navmenu">
+
+<!-- ======= Header ======= -->
+<header id="header" class="header sticky-top d-flex align-items-center"
+        style="padding: 0">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1>Be Active</h1>
+            <span>!</span>
+        </a>
+        <!-- Nav Menu -->
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+        <!-- End Nav Menu -->
+        <a></a>
+    </div>
+</header><!-- End Header -->
+
+<main id="main">
+
+    <!-- Blog Page Title & Breadcrumbs -->
+    <div data-aos="fade" class="page-title">
+        <div class="heading p-4">
+            <div class="container ">
+                <div class="row d-flex justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1>My created offers</h1>
+                        <p class="mb-0">That is my created offers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- End Page Title -->
+
+    <!-- Blog Section - Blog Page -->
+    <section id="blog" class="blog p-3">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="row gy-4 posts-list">
+                <div class="col-xl-4 col-lg-6 mt-5" th:each="offer: ${myOffers}">
+                    <article>
+                        <div class="post-img">
+                            <img th:src="${offer.imgUrlMain}" alt="Hobby image" class="img-fluid">
+                        </div>
+                        <p class="post-category mb-1">
+                            <strong>Category:</strong> <span th:text="${offer.category}"></span>
+                        </p>
+                        <p class="post-category mb-3">
+                            <strong>Location:</strong> <span th:text="${offer.location}"></span>
+                        </p>
+                        <h2 class="title">
+                            <a th:href="@{/hobbies/details/{id}(id=${offer.id})}" th:text="${offer.name}"></a>
+                        </h2>
+                    </article>
+                </div><!-- End post list item -->
+            </div><!-- End blog posts list -->
+
+        </div>
+    </section><!-- End Blog Section -->
+
+</main>
+
+<!-- ======= Footer ======= -->
+<footer th:replace="~{fragments/footer :: footer}"></footer><!-- End Footer -->
+
+<!-- ======= JS ======= -->
+<div th:replace="~{fragments/js :: js}"></div><!-- End JS -->
+
+</body>
+
+</html>
+

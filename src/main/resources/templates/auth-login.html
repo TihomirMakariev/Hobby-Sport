@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- ======= Head ======= -->
+<head th:replace="~{fragments/head::head}"></head>
+
+<body class="index-page" data-bs-spy="scroll" data-bs-target="#navmenu">
+
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center" style="padding: 0">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1>Be Active</h1>
+            <span>!</span>
+        </a>
+        <!-- Nav Menu -->
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+        <!-- End Nav Menu -->
+        <a></a>
+    </div>
+</header><!-- End Header -->
+
+<main id="main">
+
+    <!-- Hero Section - Home Page -->
+    <section id="hero" class="hero">
+        <img class="background-img" src="/images/hero-bg.jpg" alt="" data-aos="fade-in">
+
+        <!-- Login 2 - Bootstrap Brain Component -->
+        <div class="bg-light py-2 py-md-3" id="auth-register">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="bg-white p-4 p-md-5 rounded shadow-sm">
+                            <div class="text-center mb-5">
+                                <h2 class="h3" style="color: coral">Login</h2>
+                                <h3 class="fs-6 fw-normal text-secondary m-0">Enter your details to login</h3>
+                            </div>
+                            <form th:action="@{/users/login}" th:method="post">
+                                <div class="row gy-3">
+                                    <div class="col-12">
+                                        <input th:value="${email}"
+                                               type="email"
+                                               class="form-control form-control-sm"
+                                               name="email"
+                                               id="email"
+                                               placeholder="name@example.com"
+                                               required>
+                                        <div class="invalid-feedback errors alert alert-danger">
+                                            <div>
+                                                <!--                                            th:each="err : ${#fields.errors('email')}"-->
+                                                <!--                                            th:text="${err}">-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <input th:value="${password}"
+                                               type="password"
+                                               class="form-control form-control-sm"
+                                               name="password"
+                                               id="password"
+                                               placeholder="Password"
+                                               value=""
+                                               required/>
+
+                                        <p th:if="${bad_credentials}" class="errors alert alert-danger mt-3"
+                                           style="font-size: 14px; color: #090909;">
+                                            Invalid Username or Password.
+                                        </p>
+                                    </div>
+                                    <div class="col-12 form-control-sm">
+                                        <div class="d-grid">
+                                            <button class="btn btn-sm btn-danger" type="submit" >Sign in</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Hero Section -->
+</main>
+
+<!-- ======= Footer ======= -->
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<!-- End Footer -->
+
+<div th:replace="~{fragments/js :: js}"></div>
+</body>
+
+</html>

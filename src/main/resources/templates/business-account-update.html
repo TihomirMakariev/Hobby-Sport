@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- ======= Head ======= -->
+<head th:replace="~{fragments/head::head}"></head>
+
+<body class="blog-page" data-bs-spy="scroll" data-bs-target="#navmenu">
+
+<!-- ======= Header ======= -->
+<header id="header" class="header sticky-top d-flex align-items-center"
+        style="padding: 0">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+            <h1>Be Active</h1>
+            <span>!</span>
+        </a>
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    </div>
+</header>
+
+<main id="main">
+
+    <section class="p-0">
+        <div class="bg-light py-2 py-md-3" id="auth-register">
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-6">
+                        <div class="bg-white p-4 p-md-5 rounded shadow-sm">
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-center">
+                                    <div class="mb-5 text-center">
+                                        <h2 class="h3" style="color: coral">Update Business Account</h2>
+                                        <h3 class="fs-6 fw-normal text-secondary m-0">Enter your details to
+                                            register</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 bg-lightgreen" th:if="${messages}">
+                                <p>Уou have successfully made the following changes:</p>
+                                <ul><li th:each="message : ${messages}" th:text="${message}"></li></ul>
+                            </div>
+                            <form th:method="post"
+                                  th:action="@{/users/update-business-user/{id}(id=*{id})}"
+                                  th:object="${updatedBusinessDTO}">
+                                <div class="row gy-3 gy-md-4 overflow-hidden">
+                                    <div class="col-12">
+                                        <input th:field="*{firstName}"
+                                               th:errorclass="is-invalid"
+                                               type="text"
+                                               class="form-control form-control-sm"
+                                               name="firstName"
+                                               id="firstName"
+                                               placeholder="First name"
+                                               required/>
+                                        <div th:if="${#fields.hasErrors('firstName')}" class="invalid-feedback">
+                                            <span th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <input th:field="*{lastName}"
+                                               th:errorclass="is-invalid"
+                                               type="text"
+                                               class="form-control form-control-sm"
+                                               name="lastName"
+                                               id="lastName"
+                                               placeholder="Last name"
+                                               required/>
+                                        <div th:if="${#fields.hasErrors('lastName')}" class="invalid-feedback">
+                                            <span th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <input th:field="*{username}"
+                                               th:errorclass="is-invalid"
+                                               type="text"
+                                               class="form-control form-control-sm"
+                                               name="username"
+                                               id="username"
+                                               placeholder="Username"
+                                               required/>
+                                        <div th:if="${#fields.hasErrors('username')}" class="invalid-feedback">
+                                            <span th:each="err : ${#fields.errors('username')}" th:text="${err}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <input th:field="*{businessName}"
+                                               th:errorclass="is-invalid"
+                                               type="text"
+                                               class="form-control form-control-sm"
+                                               name="businessName"
+                                               id="businessName"
+                                               placeholder="Business name"
+                                               required/>
+                                        <div th:if="${#fields.hasErrors('businessName')}" class="invalid-feedback">
+                                            <span th:each="err : ${#fields.errors('businessName')}" th:text="${err}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <input th:field="*{email}"
+                                               th:errorclass="is-invalid"
+                                               type="email"
+                                               class="form-control form-control-sm"
+                                               name="email"
+                                               id="email"
+                                               placeholder="name@example.com"
+                                               required/>
+                                        <div th:if="${#fields.hasErrors('email')}" class="invalid-feedback">
+                                            <span th:each="err : ${#fields.errors('email')}" th:text="${err}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <input th:field="*{address}"
+                                               th:errorclass="is-invalid"
+                                               type="text"
+                                               class="form-control form-control-sm"
+                                               name="address"
+                                               id="address"
+                                               placeholder="Address"
+                                               required/>
+                                        <div th:if="${#fields.hasErrors('address')}" class="invalid-feedback">
+                                            <span th:each="err : ${#fields.errors('address')}" th:text="${err}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <input th:field="*{password}"
+                                               th:errorclass="is-invalid"
+                                               type="password"
+                                               class="form-control form-control-sm"
+                                               name="password"
+                                               id="password"
+                                               placeholder="Password"/>
+                                        <div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
+                                            <span th:each="err : ${#fields.errors('password')}" th:text="${err}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <input th:field="*{confirmPassword}"
+                                               th:errorclass="is-invalid"
+                                               type="password"
+                                               class="form-control form-control-sm"
+                                               name="confirmPassword"
+                                               id="confirmPassword"
+                                               placeholder="Confirm password"/>
+                                        <div th:if="${#fields.hasErrors('confirmPassword')}" class="invalid-feedback">
+                                            <span th:each="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-grid">
+                                            <button class="btn btn-sm btn-primary" type="submit">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- ======= Footer ======= -->
+<footer th:replace="~{fragments/footer :: footer}"></footer><!-- End Footer -->
+
+<!-- ======= JS ======= -->
+<div th:replace="~{fragments/js :: js}"></div><!-- End JS -->
+
+</body>
+
+</html>

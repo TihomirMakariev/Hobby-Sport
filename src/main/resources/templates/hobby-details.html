@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- ======= Head ======= -->
+<head th:replace="~{fragments/head::head}"></head>
+
+<body class="blog-details-page" data-bs-spy="scroll" data-bs-target="#navmenu">
+
+<!-- ======= Header ======= -->
+<header id="header" class="header sticky-top d-flex align-items-center"
+        style="padding: 0">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+        <a href="/static" class="logo d-flex align-items-center me-auto me-xl-0">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1>Be Active</h1>
+            <span>!</span>
+        </a>
+
+        <!-- Nav Menu -->
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+        <!-- End Nav Menu -->
+
+        <a></a>
+
+    </div>
+</header><!-- End Header -->
+
+<main id="main">
+
+    <!-- Blog Details Page Title & Breadcrumbs -->
+    <div data-aos="fade" class="page-title">
+        <nav class="breadcrumbs">
+            <div class="container">
+                <ol>
+                    <li><a href="/hobbies/all">Hobbies & Sports</a></li>
+                    <li class="current">Hobby details</li>
+                </ol>
+            </div>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <!-- Blog-details Section - Blog Details Page -->
+    <section id="blog-details" class="blog-details" th:object="${hobbyOfferView}">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="row g-5">
+                <div class="col-lg-8 mx-auto">
+                    <article class="article">
+                        <div class="post-img">
+                            <img th:src="*{imgUrlMain}" alt="" class="img-fluid main-image">
+                        </div>
+                        <div class="additional-images">
+                            <img th:src="*{imgUrlOne}" alt="Additional Image 1" class="img-fluid small-image">
+                            <img th:src="*{imgUrlTwo}" alt="Additional Image 2" class="img-fluid small-image">
+                            <img th:src="*{imgUrlThree}" alt="Additional Image 3" class="img-fluid small-image">
+                        </div>
+
+                        <h2 class="title" th:text="${name}"></h2>
+
+                        <div class="meta-top post-category">
+                            <p class="post-category mb-1"><strong>Hobby name:</strong> <span th:text="*{name}"></span></p>
+                            <p class="post-category mb-1"><strong>Category:</strong> <span th:text="*{category}"></span></p>
+                            <p class="post-category mb-1"><strong>Location:</strong> <span th:text="*{location}"></span></p>
+                            <p class="post-category mb-0"><strong>Price:</strong> <span th:text="|*{price} EUR|"></span></p>
+                        </div> <!--End meta top-->
+
+                        <div class="meta-top">
+                            <ul>
+                                <th:block sec:authorize="hasRole('USER')">
+                                    <li class="d-flex align-items-center">
+                                        <span><a th:if="${isSaved}" class="add-crt-edit" th:href="@{/hobbies/remove-hobby/{id}(id = *{id})}"
+                                                 style="color: orangered"><i class="bi bi-trash" style="color: orangered"></i>Remove</a></span>
+                                    </li>
+                                    <li class="d-flex align-items-center">
+                                        <span><a th:if="${!isSaved}" class="add-crt-edit" th:href="@{/hobbies/save-hobby/{id}(id = *{id})}"
+                                                 style="color: orangered"><i class="bi bi-bookmark-heart" style="color: orangered"></i>Save</a></span>
+                                    </li>
+                                    <li class="d-flex align-items-center">
+                                        <span><a class="add-crt-edit" th:href="@{/shoppingCart/addProduct/{id}(id=*{id})}"
+                                                 style="color: orangered"><i class="bi bi-cart4" style="color: orangered"></i>Add to cart</a></span></li>
+                                </th:block>
+
+                                <th:block th:if="${isOwnerOrAdmin}">
+                                    <li class="d-flex align-items-center">
+                                        <span><a class="add-crt-edit" href="#}"
+                                                 style="color: orangered"><i class="bi bi-arrow-repeat" style="color: orangered"></i>Update</a></span>
+                                    </li>
+                                    <li class="d-flex align-items-center">
+                                        <span><a class="add-crt-edit" th:href="@{/hobbies/delete/{id}(id = *{id})}"
+                                                 style="color: orangered"><i class="bi bi-trash" style="color: orangered"></i>Delete</a></span>
+                                    </li>
+                                </th:block>
+                            </ul>
+                        </div><!-- End meta top -->
+
+                        <div class="content" th:if="${registrationMessage != null}">
+                            <p class="alert alert-warning">
+                                <span th:text="${registrationMessage}"></span>
+                                <a class="add-crt-edit" th:href="@{/users/login}" style="color: orangered">Login</a>
+                            </p>
+                        </div>
+
+                        <div class="content">
+                            <p th:text="*{description}"></p>
+                        </div><!-- End content -->
+
+                    </article><!-- End article -->
+                </div><!-- End col-lg-8 -->
+            </div><!-- End row g-5 -->
+        </div><!-- End container -->
+    </section><!-- End Blog-details Section -->
+
+</main>
+
+<!-- ======= Footer ======= -->
+<footer th:replace="~{fragments/footer :: footer}"></footer><!-- End Footer -->
+
+<!-- ======= JS ======= -->
+<div th:replace="~{fragments/js :: js}"></div><!-- End JS -->
+
+
+<!--<script th:inline="javascript">
+    /*<![CDATA[*/
+    /* Проверяваме дали страницата е заредена успешно и няма грешка */
+    document.addEventListener("DOMContentLoaded", function(event) {
+        /* Тук проверяваме дали изключението UnauthorizedAccessException е възникнало */
+        var unauthorizedAccess = /*[[${#exception?.class?.simpleName == 'UnauthorizedAccessException'}]]*/;
+
+        /* Ако е възникнало неоторизиран достъп, показваме съобщение за грешка */
+        if (unauthorizedAccess) {
+            alert("You are not authorized to delete this hobby.");
+        }
+    });
+    /*]]>*/
+</script>-->
+
+
+
+</body>
+
+</html>

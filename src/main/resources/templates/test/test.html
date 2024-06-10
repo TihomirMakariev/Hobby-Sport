@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head::head}"></head></head>
+<body class="index-page" data-bs-spy="scroll" data-bs-target="#navmenu">
+
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center" style="padding: 0">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1>Be Active</h1>
+            <span>!</span>
+        </a>
+        <!-- Nav Menu -->
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+        <!-- End Nav Menu -->
+        <a></a>
+    </div>
+</header><!-- End Header -->
+
+<main id="main">
+    <section id="hero" class="hero">
+        <img class="background-img" src="/images/hero-bg.jpg" alt="" data-aos="fade-in">
+        <div class="bg-light py-2 py-md-3" id="auth-register">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12 col-md-10">
+                        <div class="bg-white p-4 p-md-5 rounded shadow-sm">
+                            <div class="text-center mb-4">
+                                <img src="/images/hobby-test-try.jpg" alt="Test" class="img-fluid border-3">
+                            </div>
+                            <form th:object="${testDTO}" th:action="@{/test}" method="POST">
+                                <div class="mb-3">
+                                    <select th:field="*{categoryOne}" class="form-select wide-select" aria-label="Default select example">
+                                        <option th:value="${null}" selected>What aspect of your life needs improvement?</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).FUN}">Entertainment</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).ACTIVE}">Challenges</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).ACTIVE}">Excitement</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).INTELLECTUAL}">Mental stimulation</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).CREATIVE}">Creativity boost</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).OTHER}">Other</option>
+                                    </select>
+                                    <small th:if="${#fields.hasErrors('categoryOne')}" th:errors="*{categoryOne}" class="text-danger">Error message</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <select th:field="*{categoryThree}" class="form-select wide-select" aria-label="Default select example">
+                                        <option th:value="${null}" selected>How active are you?</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).ACTIVE}">Very active</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).RELAX}">Not active</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).ACTIVE}">Sometimes active</option>
+                                    </select>
+                                    <small th:if="${#fields.hasErrors('categoryThree')}" th:errors="*{categoryThree}" class="text-danger">Error message</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <select th:field="*{categoryTwo}" class="form-select wide-select" aria-label="Default select example">
+                                        <option th:value="${null}" selected>How do you feel about social activities?</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).SOCIAL}">I love them</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).OTHER}">I avoid them</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).SOCIAL}">I enjoy them occasionally</option>
+                                    </select>
+                                    <small th:if="${#fields.hasErrors('categoryTwo')}" th:errors="*{categoryTwo}" class="text-danger">Error message</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <select th:field="*{categoryFive}" class="form-select wide-select" aria-label="Default select example">
+                                        <option th:value="${null}" selected>Where did you go for your last vacation?</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).ACTIVE}">Mountains</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).RELAX}">Beach</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).RELAX}">Stayed at home</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).OTHER}">Other</option>
+                                    </select>
+                                    <small th:if="${#fields.hasErrors('categoryFive')}" th:errors="*{categoryFive}" class="text-danger">Error message</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <select th:field="*{categoryFour}" class="form-select wide-select" aria-label="Default select example">
+                                        <option th:value="${null}" selected>What did you do last weekend?</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).INTELLECTUAL}">Worked on the computer</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).RELAX}">Relaxed at home</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).ACTIVE}">Spent time outdoors</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).OTHER}">Other</option>
+                                    </select>
+                                    <small th:if="${#fields.hasErrors('categoryFour')}" th:errors="*{categoryFour}" class="text-danger">Error message</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <select th:field="*{categorySix}" class="form-select wide-select" aria-label="Default select example">
+                                        <option th:value="${null}" selected>What's the best compliment you've received?</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).CREATIVE}">You are creative</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).ACTIVE}">You are fit</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).INTELLECTUAL}">You are smart</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).SOCIAL}">You are kind</option>
+                                    </select>
+                                    <small th:if="${#fields.hasErrors('categorySix')}" th:errors="*{categorySix}" class="text-danger">Error message</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <select th:field="*{categorySeven}" class="form-select wide-select" aria-label="Default select example">
+                                        <option th:value="${null}" selected>Are you willing to commit?</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).OTHER}">Yes, always</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).OTHER}">Sometimes</option>
+                                        <option th:value="${T(bg.tihomir.hobby.model.enums.CategoryNameEnum).OTHER}">Only if I find the right activity</option>
+                                    </select>
+                                    <small th:if="${#fields.hasErrors('categorySeven')}" th:errors="*{categorySeven}" class="text-danger">Error message</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <select th:field="*{location}" class="form-select wide-select" aria-label="Default select example">
+                                        <option th:value="${null}" selected>Select your city</option>
+                                        <option th:each="l : ${T(bg.tihomir.hobby.model.enums.LocationEnum).values()}" th:text="${l}" th:value="${l}"></option>
+                                    </select>
+                                    <small th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="text-danger">Error message</small>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button class="btn btn-danger" type="submit">Submit</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/js :: js}"></div>
+</body>
+</html>

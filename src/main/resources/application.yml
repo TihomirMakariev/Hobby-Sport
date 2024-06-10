@@ -1,0 +1,56 @@
+cloudinary:
+    api-key: ${CLOUDINARY_API_KEY}
+    api-secret: ${CLOUDINARY_API_SECRET}
+    cloud-name: ${CLOUDINARY_CLOUD_NAME}
+
+spring:
+    datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://${MYSQL_HOSTNAME}:${MYSQL_PORT}/${MYSQL_DATABASE}?&createDatabaseIfNotExist=true
+        username: ${MYSQL_USERNAME}
+        password: ${MYSQL_PASSWORD}
+    jpa:
+        defer-datasource-initialization: true
+        open-in-view: false
+        properties:
+            hibernate:
+                format_sql: true
+        show-sql: true
+        hibernate:
+            ddl-auto: update
+    sql:
+        init:
+            mode: never
+    mvc:
+        hiddenmethod:
+            filter:
+                enabled: true
+    main:
+        allow-bean-definition-overriding: true
+    servlet:
+        multipart:
+            max-file-size: 5MB
+            max-request-size: 10MB
+
+management:
+    endpoints:
+        web:
+            base-path: /actuator
+            exposure:
+                include: '*'
+    server:
+        port: 5000
+
+app:
+    default:
+        password: ${DEFAULT_PASSWORD}
+
+logging:
+    level:
+        org:
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE

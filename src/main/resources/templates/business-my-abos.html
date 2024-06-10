@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- ======= Head ======= -->
+<head th:replace="~{fragments/head::head}"></head>
+
+<body class="blog-page" data-bs-spy="scroll" data-bs-target="#navmenu">
+
+<!-- ======= Header ======= -->
+<header id="header" class="header sticky-top d-flex align-items-center"
+        style="padding: 0">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1>Be Active</h1>
+            <span>!</span>
+        </a>
+        <!-- Nav Menu -->
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+        <!-- End Nav Menu -->
+        <a></a>
+    </div>
+</header><!-- End Header -->
+
+<main id="main">
+
+    <div class="container my-5">
+        <h2 class="text-center mb-5">My Clients & Subscriptions</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Hobby</th>
+                    <th scope="col">Image</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="abo : ${abos}">
+                    <td class="col-md-1" th:text="${abo.clientName}"></td>
+                    <td class="col-md-2" th:text="|${abo.aboPrice} EUR|"></td>
+                    <td class="col-md-2" th:text="${abo.name}"></td>
+                    <td class="col-md-2">
+                        <img  th:src="${abo.imgUrl}" alt="" class="img-fluid" style="max-width: 100px;">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+
+<!-- ======= Footer ======= -->
+<footer th:replace="~{fragments/footer :: footer}"></footer><!-- End Footer -->
+
+<!-- ======= JS ======= -->
+<div th:replace="~{fragments/js :: js}"></div><!-- End JS -->
+
+</body>
+
+</html>
+
